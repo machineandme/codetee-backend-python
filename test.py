@@ -1,15 +1,13 @@
-import main
+from app import syntax, distortion
 
-with open("main.py") as file:
-    TEST_CODE = file.read()
+import os
 
-
-def test_cli():
-    tokens = [i for i in main.tokenize('main.py', TEST_CODE)]
-    print(main.show_cli(iter(tokens)))
-
-
-def test_image():
-    tokens = [i for i in main.tokenize('main.py', TEST_CODE)]
-    img = main.show_pic(iter(tokens))
-    img.show()
+BASE = "/Users/nikolaykiselev/Life/shirts/language-examples/languages"
+for i in os.listdir(BASE):
+    FILEPATH = i
+    with open(BASE + '/' +FILEPATH) as file:
+        TEST_CODE = file.read()
+    tokens = [i for i in syntax.tokenize(FILEPATH, TEST_CODE)]
+    img = syntax.show_pic(iter(tokens))
+    # distortion.random_swap(img)
+    img.save("tests/"+FILEPATH+".png")
