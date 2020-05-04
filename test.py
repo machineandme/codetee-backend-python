@@ -11,3 +11,4 @@ for i in os.listdir(BASE):
     img = syntax.show_pic(iter(tokens))
     # distortion.random_swap(img)
     img.save("tests/"+FILEPATH+".png")
+    print(FILEPATH)

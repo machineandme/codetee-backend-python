@@ -12,12 +12,12 @@ from pygments.token import (Comment, Error, Escape, Generic, Keyword, Literal,
 
 from app import ibmcolors
 
-FONT_SIZE = 20
+FONT_SIZE = 34
 
 
 class MegaSexyStyle(Style):
     default_style = "#dde1E6"
-    background_color = "#000000"
+    background_color = ibmcolors.Warm_Gray_100
     styles = {
         Token: ibmcolors.Cool_Gray_20,
         Text: ibmcolors.Cool_Gray_20,
@@ -46,8 +46,8 @@ class MegaSexyStyle(Style):
         Name.Function: ibmcolors.Blue_50,
         Name.Function.Magic: ibmcolors.Blue_60,
         Name.Property: ibmcolors.Yellow_30,
-        Name.Label: ibmcolors.Blue_50,
-        Name.Namespace: ibmcolors.Blue_50,
+        Name.Label: ibmcolors.Cool_Gray_20,
+        Name.Namespace: ibmcolors.Cool_Gray_20,
         Name.Other: ibmcolors.Cool_Gray_30,
         Name.Tag: ibmcolors.Red_50,
         Name.Variable: ibmcolors.Blue_50,
@@ -182,7 +182,7 @@ def show_cli(tokens):
 def show_pic(tokens):
     form = ImageFormatter(line_numbers=False,
                           image_pad=0,
-                          line_pad=10,
+                          line_pad=6,
                           style=MegaSexyStyle)
     file = BytesIO()
     form.format(tokens, file)
