@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "carbon-components": "^10.11.2"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0"
+  }
+}
