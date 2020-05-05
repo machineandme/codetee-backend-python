@@ -3,34 +3,180 @@ const FNFIR = ["abominable", "absolute", "absurd", "acceptable", "accurate", "ac
 const FNSEC = ["app", "module", "script", "example", "index", "style", "test", "view"]
 
 function choose(choices) {
-    let index = Math.floor(Math.random() * choices.length)
-    return choices[index]
+  let index = Math.floor(Math.random() * choices.length)
+  return choices[index]
 }
 
 function makeFileTypes() {
-    let result = []
-    for (let i = 0; i < 1; i++) {
-        mr = Math.random()
-        if (mr < .1) {
-            let s = choose(FNSEC)
-            s = s.charAt(0).toUpperCase() + s.slice(1)
-            result.push(choose(FNFIR) + s + choose(EXTS))
-        } else if (mr < .2) {
-            result.push((choose(FNFIR) + "_" + choose(FNSEC) + choose(EXTS)).toUpperCase())
-        } else {
-            result.push(choose(FNFIR) + "_" + choose(FNSEC) + choose(EXTS))
-        }
+  let result = []
+  for (let i = 0; i < 1; i++) {
+    let mr = Math.random()
+    if (mr < .1) {
+      let s = choose(FNSEC)
+      s = s.charAt(0).toUpperCase() + s.slice(1)
+      result.push(choose(FNFIR) + s + choose(EXTS))
+    } else if (mr < .2) {
+      result.push((choose(FNFIR) + "_" + choose(FNSEC) + choose(EXTS)).toUpperCase())
+    } else {
+      result.push(choose(FNFIR) + "_" + choose(FNSEC) + choose(EXTS))
     }
-    return result.join(", ")
+  }
+  return result.join(", ")
 }
 
 let wap = new Vue({
-    el: "#app",
-    data: {
-        fileType: makeFileTypes()
-    }
+  el: "#app",
+  data: {
+    fileType: makeFileTypes()
+  }
 })
 
-setInterval(()=>{
-    wap.fileType = makeFileTypes()
+setInterval(() => {
+  wap.fileType = makeFileTypes()
 }, 2000)
+
+
+
+
+import * as THREE from './three/build/three.module.js';
+
+import { DDSLoader } from './three/examples/jsm/loaders/DDSLoader.js';
+import { MTLLoader } from './three/examples/jsm/loaders/MTLLoader.js';
+import { OBJLoader } from './three/examples/jsm/loaders/OBJLoader.js';
+
+
+var container;
+
+var camera, scene, renderer;
+
+var mouseX = 0, mouseY = 0;
+
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
+
+
+init();
+animate();
+
+
+function init() {
+
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+  camera.position.z = 250;
+
+  // scene
+
+  scene = new THREE.Scene();
+
+  var ambientLight = new THREE.AmbientLight(0xcccccc, 0.4);
+  scene.add(ambientLight);
+
+  var pointLight = new THREE.PointLight(0xffffff, 0.8);
+  camera.add(pointLight);
+  scene.add(camera);
+
+  // model
+
+  var onProgress = function (xhr) {
+
+    if (xhr.lengthComputable) {
+
+      var percentComplete = xhr.loaded / xhr.total * 100;
+      console.log(Math.round(percentComplete, 2) + '% downloaded');
+
+    }
+
+  };
+
+  var onError = function () { };
+
+  var manager = new THREE.LoadingManager();
+  manager.addHandler(/\.dds$/i, new DDSLoader());
+
+  // comment in the following line and import TGALoader if your asset uses TGA textures
+  // manager.addHandler( /\.tga$/i, new TGALoader() );
+
+  const base_mtl = '/shirt/'
+  const mtl_file = '6_OBJ_T-shirts.mtl'
+  const obj_file = '6_OBJ_T-shirts.obj'
+  new MTLLoader(manager)
+    .setPath(base_mtl)
+    .load(mtl_file, function (materials) {
+
+      materials.preload()
+      for (const material in materials["materials"]) {
+        materials["materials"][material].side = THREE.DoubleSide
+      }
+
+      new OBJLoader(manager)
+        .setMaterials(materials)
+        .setPath(base_mtl)
+        .load(obj_file, function (object) {
+
+          object.position.y = - 95;
+          object.scale.x = .1
+          object.scale.y = .1
+          object.scale.z = .1
+          scene.add(object);
+
+        }, onProgress, onError);
+
+    });
+
+  //
+
+  renderer = new THREE.WebGLRenderer({ alpha: true });
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement);
+
+  document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+  //
+
+  window.addEventListener('resize', onWindowResize, false);
+
+}
+
+function onWindowResize() {
+
+  windowHalfX = window.innerWidth / 2;
+  windowHalfY = window.innerHeight / 2;
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+}
+
+function onDocumentMouseMove(event) {
+
+  mouseX = (event.clientX - windowHalfX) / 2;
+  mouseY = (event.clientY - windowHalfY) / 2;
+
+}
+
+//
+
+function animate() {
+
+  requestAnimationFrame(animate);
+  render();
+
+}
+
+function render() {
+
+  camera.position.x += (mouseX - camera.position.x) * .05;
+  // camera.position.y = (mouseY - camera.position.y) * .05;
+  let centa = new THREE.Vector3(scene.position.x, scene.position.y, scene.position.z)
+  camera.lookAt(centa);
+
+  renderer.render(scene, camera);
+
+}
