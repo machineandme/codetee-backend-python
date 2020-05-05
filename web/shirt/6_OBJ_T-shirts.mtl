@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
 # File Created: 05.04.2017 21:46:06
 
-newmtl hanger_anime_wood
+newmtl hanger_wood
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -13,7 +13,7 @@ newmtl hanger_anime_wood
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
 
-newmtl hanger_anime_metall
+newmtl hanger_metall
 	Ns 84.0000
 	Ni 1.5000
 	d 1.0000
@@ -25,7 +25,7 @@ newmtl hanger_anime_metall
 	Ks 1.2240 1.2240 1.2240
 	Ke 0.0000 0.0000 0.0000
 
-newmtl t_shirt_anime_kn_green
+newmtl t_shirt_kn_green
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -36,12 +36,12 @@ newmtl t_shirt_anime_kn_green
 	Kd 0.7341 0.7341 0.7341
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka t-shirt_anime_kn.jpg
-	map_Kd t-shirt_anime_kn.jpg
-	map_bump t-shirt_anime_kn.jpg
-	bump t-shirt_anime_kn.jpg
+	map_Ka tee.jpg
+	map_Kd tee.jpg
+	map_bump tee.jpg
+	bump tee.jpg
 
-newmtl lable_anime
+newmtl lable_kn
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -54,51 +54,3 @@ newmtl lable_anime
 	Ke 0.0000 0.0000 0.0000
 	map_Ka logo_chair_kn.jpg
 	map_Kd logo_chair_kn.jpg
-
-newmtl t_shirt_anime_black
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.5880 0.5880 0.5880
-	Kd 0.0910 0.0910 0.0910
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka t-shirt_anime1_kn.jpg
-	map_Kd t-shirt_anime1_kn.jpg
-	map_bump t-shirt_anime1_kn.jpg
-	bump t-shirt_anime1_kn.jpg
-
-newmtl t_shirt_anime_white
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.5880 0.5880 0.5880
-	Kd 0.7341 0.7341 0.7341
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka t-shirt_anime0_kn.jpg
-	map_Kd t-shirt_anime0_kn.jpg
-	map_bump t-shirt_anime0_kn.jpg
-	bump t-shirt_anime0_kn.jpg
-
-newmtl t_shirt_anime_pik
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.5880 0.5880 0.5880
-	Kd 0.8541 0.6141 0.1024
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka t-shirt_anime2_kn.jpg
-	map_Kd t-shirt_anime2_kn.jpg
-	map_bump t-shirt_anime2_kn.jpg
-	bump t-shirt_anime2_kn.jpg
