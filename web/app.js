@@ -2,6 +2,10 @@ const EXTS = [".ada", ".b", ".b", ".c", ".c++", ".cc", ".cmake", ".cmd", ".cs", 
 const FNFIR = ["abominable", "absolute", "absurd", "acceptable", "accurate", "actual", "adult", "advanced", "advantageous", "aged", "agitated", "ancient", "appalled", "approximate", "aromatic", "arrogant", "artificial", "astonished", "average", "awed", "bad", "baked", "basic", "bitter", "blunt", "boastful", "boring", "brave", "brief", "bright", "broad", "busy", "calculating", "calm", "can", "capable", "careless", "certain", "cheap", "cheerful", "clean", "cold", "competitive", "complete", "complex", "concave", "conditional", "confident", "conic", "considerate", "constant", "contented", "continuous", "convex", "cooked", "cool", "cooperative", "correct", "crazy", "creative", "cubic", "cunning", "curious", "damaged", "dangerous", "deaf", "decent", "deep", "defective", "dejected", "delightful", "depressed", "desirable", "difficult", "diligent", "disadvantageous", "distressed", "divorced", "doubtful", "dreamy", "dry", "early", "easy", "efficient", "emaciated", "emotional", "engaged", "enterprising", "equal", "erudite", "essential", "even", "exact", "excellent", "excessive", "excited", "exhausted", "expensive", "experienced", "faithful", "false", "fantastic", "far", "fat", "fearful", "final", "fine", "fragrant", "free", "frequent", "fresh", "fried", "friendly", "frightened", "full", "fuming", "future", "gifted", "glad", "good", "great", "greedy", "grown", "guilty", "haggard", "handsome", "happy", "hard", "harmful", "harmless", "healthy", "honest", "horizontal", "horrified", "hospitable", "hot", "huge", "humid", "hungry", "hurt", "hysterical", "ignorant", "illegal", "illogical", "imaginary", "important", "impudent", "inclined", "incomplete", "incorruptible", "industrious", "inexperienced", "inferior", "infrequent", "infuriated", "initial", "insignificant", "insufficient", "intact", "interesting", "invalid", "irritable", "late", "lazy", "lean", "little", "logical", "lonely", "long", "loud", "lovey", "low", "lucky", "mad", "married", "mature", "maximum", "mediocre", "minimum", "modest", "moved", "muffled", "naive", "narrow", "natural", "near", "necessary", "negative", "negligent", "nervous", "nice", "noisy", "normal", "numerous", "observant", "obsolete", "obstinate", "occasional", "occupied", "old", "optimistic", "optimum", "outgoing", "oval", "particular", "past", "peevish", "perfect", "periodical", "persistent", "pessimistic", "pleasant", "positive", "practical", "preceding", "precise", "pregnant", "preliminary", "present", "pretty", "previous", "profitable", "pungent", "purposeful", "quick", "quiet", "ragged", "rapid", "rare", "raw", "ready", "real", "recent", "rectangular", "redundant", "regular", "rejected", "relative", "reliable", "repulsive", "reserved", "respectful", "responsible", "rich", "robust", "rough", "round", "sad", "salty", "sarcastic", "satisfactory", "satisfied", "secondary", "self", "selfish", "separate", "serious", "shallow", "sharp", "shocked", "shocking", "short", "shy", "significant", "similar", "simultaneous", "single", "slim", "slow", "sly", "smelly", "smooth", "sociable", "soft", "sophisticated", "sorrowful", "sorry", "sour", "special", "specific", "spherical", "spoiled", "spoilt", "square", "stable", "standard", "startled", "stinking", "straight", "strange", "strong", "stuffed", "stunned", "sudden", "sufficient", "superfluous", "superior", "surprised", "sweet", "talented", "talkative", "tall", "tasteless", "terrified", "theoretical", "thick", "thin", "thirsty", "thorough", "tired", "tiresome", "tolerant", "touching", "tough", "traditional", "triangular", "true", "trusting", "typical", "ugly", "unattractive", "uneven", "unhappy", "uninterrupted", "unpleasant", "unprofitable", "upset", "urgent", "useful", "useless", "usual", "vacant", "valid", "vertical", "vigorous", "warm", "weak", "well", "wet", "wise", "wonderful", "woozy", "worried", "wrong", "young"]
 const FNSEC = ["app", "module", "script", "example", "index", "style", "test", "view"]
 
+
+let firstRun = true
+
+
 function choose(choices) {
   let index = Math.floor(Math.random() * choices.length)
   return choices[index]
@@ -54,9 +58,9 @@ let rh = new Date().getTime()
 let sized
 
 if (window.innerWidth < window.innerHeight) {
-  sized = window.innerWidth / 2
+  sized = window.innerWidth
 } else {
-  sized = window.innerHeight / 2
+  sized = window.innerHeight
 }
 
 let windowHalfX = sized / 2
@@ -70,7 +74,7 @@ animate()
 function init() {
 
   container = document.getElementById('tee-view-3d')
-  document.body.appendChild(container)
+  // document.body.appendChild(container)
 
   camera = new THREE.PerspectiveCamera(45, sized / sized, 1, 2000)
   camera.position.z = 250
@@ -124,11 +128,17 @@ function init() {
         .setPath(base_mtl)
         .load(obj_file, function (object) {
 
-          object.position.x = 60
-          object.position.y = -170
-          object.scale.x = .2
-          object.scale.y = .2
-          object.scale.z = .2
+          // object.position.x = 60
+          // object.position.y = -170
+          // object.scale.x = .2
+          // object.scale.y = .2
+          // object.scale.z = .2
+          let mod = 1
+          object.position.x = 60 * mod
+          object.position.y = -170 * mod
+          object.scale.x = .2 * mod
+          object.scale.y = .2 * mod
+          object.scale.z = .2 * mod
           scene.add(object)
 
         }, onProgress, onError)
@@ -138,8 +148,8 @@ function init() {
   //
 
   renderer = new THREE.WebGLRenderer({ alpha: true })
-  renderer.setClearColor(0x000011, 0.1)
-  // renderer.setClearColor(0x000000, 0)
+  // renderer.setClearColor(0x000011, 0.1)
+  renderer.setClearColor(0x000000, 0)
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setSize(sized, sized)
   container.appendChild(renderer.domElement)
@@ -155,9 +165,9 @@ function init() {
 function onWindowResize() {
 
   if (window.innerWidth < window.innerHeight) {
-    sized = window.innerWidth / 2
+    sized = window.innerWidth
   } else {
-    sized = window.innerHeight / 2
+    sized = window.innerHeight
   }
 
   windowHalfX = sized / 2
@@ -186,10 +196,13 @@ function animate() {
 
 }
 
+
 function render() {
   // let de = renderer.domElement
-  if (renderer.domElement.matches(':hover')) {
+  if (firstRun || renderer.domElement.matches(':hover')) {
+    firstRun = false
     camera.position.x = renderer.domElement.offsetLeft - mouseX
+    camera.position.z = 200 + renderer.domElement.offsetTop - mouseY
     let centa = new THREE.Vector3(scene.position.x, scene.position.y, scene.position.z)
     camera.lookAt(centa)
 
