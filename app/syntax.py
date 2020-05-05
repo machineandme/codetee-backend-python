@@ -3,7 +3,7 @@ from io import BytesIO, StringIO
 from PIL import Image, ImageDraw, ImageFont
 from pygments.formatters.img import FontManager, ImageFormatter
 from pygments.formatters.terminal import TerminalFormatter
-from pygments.lexers import find_lexer_class_for_filename as _find_lexer
+from pygments.lexers import find_lexer_class as _find_lexer
 from pygments import lexers
 from pygments.style import Style
 from pygments.token import (Comment, Error, Escape, Generic, Keyword, Literal,

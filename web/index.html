@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine and me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/carbon-components@10.11.2/css/carbon-components.min.css"
+        integrity="sha256-+xMr3Y2YRc1QFWLZHNjEB6x+mk/rleD8nP/xcSGYW+0=" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main id="app">
+        <header class="bx--header" role="banner" aria-label="IBM Platform Name" data-header>
+            <a class="bx--skip-to-content" href="#main-content" tabindex="0">Skip to main content</a>
+            <a class="bx--header__name" href="javascript:void(0)" title="">
+                <span class="bx--header__name--prefix">
+                    Teeeeeees
+                    &nbsp;
+                </span>
+                [Machine and me]
+            </a>
+            <nav class="bx--header__nav" aria-label="Platform Name" data-header-nav>
+                <ul class="bx--header__menu-bar" aria-label="Platform Name">
+                    <li>
+                        <a class="bx--header__menu-item" title="Random t-short from all open collection"
+                            href="javascript:void(0)" tabindex="0">
+                            Some shirt
+                        </a>
+                    </li>
+                    <li>
+                        <a class="bx--header__menu-item" title="Create own code t-short design"
+                            href="javascript:void(0)" tabindex="0">
+                            Own codetee design
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- <div class="bx--header__global">
+                <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 1" title="Action 1"
+                    data-navigation-menu-panel-label-expand="Action 1"
+                    data-navigation-menu-panel-label-collapse="Close menu"
+                    data-product-switcher-target="#switcher-bqavcareoq">
+                </button>
+                <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 2" title="Action 2"
+                    data-navigation-menu-panel-label-expand="Action 2"
+                    data-navigation-menu-panel-label-collapse="Close menu"
+                    data-product-switcher-target="#switcher-bqavcareoq">
+                </button>
+                <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 3" title="Action 3"
+                    data-navigation-menu-panel-label-expand="Action 3"
+                    data-navigation-menu-panel-label-collapse="Close menu"
+                    data-product-switcher-target="#switcher-bqavcareoq">
+                </button>
+                <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 4" title="Action 4"
+                    data-navigation-menu-panel-label-expand="Action 4"
+                    data-navigation-menu-panel-label-collapse="Close menu"
+                    data-product-switcher-target="#switcher-bqavcareoq">
+                </button>
+            </div> -->
+        </header>
+
+        <div class="bx--content">
+            <h3>Your codetee</h3>
+            <br>
+            <div class="bx--form-item">
+                <p class="bx--label-description">Upload your code here. We accept almost any file.
+                    <br>We recently made tee with <code id="tee-with">{{fileType}}</code></p>
+                <div class="bx--file" data-file data-file-demo-state-manager>
+                    <label for="file-uploader" class="bx--file-browse-btn" role="button" tabindex="0">
+                        <div data-file-drop-container class="bx--file__drop-container">
+                            Drag and drop files here or
+                            upload
+                            <input type="file" class="bx--file-input" id="file-uploader" data-file-uploader
+                                data-target="[data-file-container]" multiple />
+                        </div>
+                    </label>
+                    <div data-file-container class="bx--file-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"
+        integrity="sha256-ngFW3UnAN0Tnm76mDuu7uUtYEcG3G5H1+zioJw3t+68=" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
