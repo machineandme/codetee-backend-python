@@ -12,6 +12,7 @@ pygments = "*"
 aiohttp = "*"
 pillow = "*"
 pytest = "*"
+geoip2 = "*"
 
 [requires]
 python_version = "3.8"

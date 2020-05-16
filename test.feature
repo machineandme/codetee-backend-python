@@ -13,10 +13,24 @@ Feature: Design your self
         Given Most simple hello world for most languages
         Then Print that kind of tees
     Scenario: Svalova and Badruxin
-        Given Love beetween two developers
-        Then Teeee pair says "You are my css" "You are my html"
+        Given Love between two developers
+        Then Tee pair says "You are my css" "You are my html"
         And Sell paired
         And Svalova design
+    Scenario: shit happens when shit compiles
+    Scenario: Vim cheat sheet
+        Given Vim shortcut sheet
+        Then print Tee with upside-down vim sheet so u can read it
+    Scenario: MobileDimension or PT?
 Feature: Board game for hackers
-Feature: Rings and braclets
+Feature: Rings and bracelets
 Feature: Donate to charity
+Feature: Own design
+    Scenario: Just for me
+    Scenario: Submit to public
+        Given Submission
+        And Public vote or Admin choice
+        Then Best sub collection
+Feature: Design distortion
+    Scenario: Upside-down letters
+    Scenario: Reversed lines

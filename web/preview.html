@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine and me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"
+          integrity="sha256-qS+snwBgqr+iFVpBB58C9UCxKFhyL03YHpZfdNUhSEw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/such_static/style.css">
+</head>
+
+<body>
+<main id="app">
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                Teeeees |<span style="margin-left: 5px" class="is-size-7">Machine &amp; me</span>
+            </a>
+        </div>
+    </nav>
+    <div class="has-background-light">
+        <section class="columns">
+            <div class="column is-half">
+                <div id="tee-view-3d"></div>
+            </div>
+            <div style="padding: 3rem" class="column is-half">
+                <div class="box">
+                    <h3 class="title">!TITLE</h3>
+                    <p>!TEXT</p>
+                    <hr>
+                    <h5 class="title is-5">1900 RUB.</h5>
+                    <button class="button is-dark" @click="buy=!buy">grab tee</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal" :class="buy?'is-active':''">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Order</p>
+                <button class="delete" aria-label="close" @click="buy=false"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">Instagram</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="@asyncio.coroutine" v-model="email">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Email?</label>
+                    <div class="control">
+                        <input class="input" type="email" placeholder="teeme@machineand.me" v-model="email">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Phone?</label>
+                    <div class="control">
+                        <input class="input" type="tel" placeholder="+79128321103" v-model="email">
+                    </div>
+                    <p class="help">We will try to find you in a telegram or whatsapp.</p>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" @click="submit">yes please</button>
+            </footer>
+        </div>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"
+        integrity="sha256-ngFW3UnAN0Tnm76mDuu7uUtYEcG3G5H1+zioJw3t+68=" crossorigin="anonymous"></script>
+<script type="module" src="/such_static/preview.js"></script>
+</body>
+
+</html>
