@@ -13,6 +13,8 @@ aiohttp = "*"
 pillow = "*"
 pytest = "*"
 geoip2 = "*"
+ua-parser = "*"
+tabulate = "*"
 
 [requires]
 python_version = "3.8"
