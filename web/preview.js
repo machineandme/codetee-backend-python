@@ -88,7 +88,7 @@ function init() {
   let ambientLight = new THREE.AmbientLight(0xcccccc, 0.8)
   scene.add(ambientLight)
 
-  let pointLight = new THREE.PointLight(0xffffff, 0.5)
+  let pointLight = new THREE.PointLight(0xffffff, 0.6)
   camera.add(pointLight)
   scene.add(camera)
 
@@ -157,7 +157,6 @@ function init() {
   container.appendChild(renderer.domElement)
 
   document.addEventListener('mousemove', onDocumentMouseMove, false)
-  document.addEventListener('touchmove', onDocumentMouseMove, false)
 
   //
 
@@ -202,7 +201,7 @@ function animate() {
 
 function render() {
   // let de = renderer.domElement
-  if (firstRun || renderer.domElement.matches(':hover') || camera.position.x != renderer.domElement.offsetLeft - mouseX) {
+  if (firstRun || renderer.domElement.matches(':hover')) {
     if (!firstRun) {
     camera.position.x = renderer.domElement.offsetLeft - mouseX
     camera.position.z = 200 + renderer.domElement.offsetTop - mouseY
