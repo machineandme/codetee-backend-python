@@ -202,7 +202,7 @@ function animate() {
 
 function render() {
   // let de = renderer.domElement
-  if (firstRun || renderer.domElement.matches(':hover')) {
+  if (firstRun || renderer.domElement.matches(':hover') || camera.position.x != renderer.domElement.offsetLeft - mouseX) {
     if (!firstRun) {
     camera.position.x = renderer.domElement.offsetLeft - mouseX
     camera.position.z = 200 + renderer.domElement.offsetTop - mouseY
