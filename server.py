@@ -180,4 +180,4 @@ app.add_routes([
 ])
 app.on_startup.append(shed)
 app.middlewares.append(error_middleware)
-web.run_app(app, host="127.0.0.1")
+web.run_app(app, host="0.0.0.0", port=80)
