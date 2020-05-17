@@ -67,11 +67,7 @@ async def shed(_):
 
 async def notify():
     while True:
-        for i in range(1):
-            if DEV:
-                await asyncio.sleep(20 + i)
-            else:
-                await asyncio.sleep(15 * (60 + i))
+        for i in range(4):
             users_unique = len(Counter(STATISTICS_EVENTS['uuid']).keys())
             users_total = len(STATISTICS_EVENTS['uuid'])
             up_time = int(time() - STATISTICS["time_start"])
@@ -87,6 +83,10 @@ async def notify():
             await telegram_send(f'**Uptime**: {STATISTICS["time_up"]}\n'
                                 f'**Users**: {users_unique}/{users_total}\n'
                                 f'''{pprint.pformat(dict(cities)).replace("'", "")}''')
+            if DEV:
+                await asyncio.sleep(20 + i)
+            else:
+                await asyncio.sleep(15 * (60 + i))
         bio = BytesIO(get_rowed_stats().encode())
         bio.name = "stats.html"
         await telegram_send_as_file(bio)
