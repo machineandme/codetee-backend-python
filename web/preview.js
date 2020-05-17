@@ -9,11 +9,11 @@ let wap = new Vue({
     buy: false,
     thx: false,
     title: "Teeeee with code!",
-    text: s,
+    text: s.split("_")[0],
+    color: s.split("_")[1],
     ig: "",
     email: "",
     phone: "",
-    imgData: ""
   },
   methods: {
     submit: function() {
@@ -23,7 +23,6 @@ let wap = new Vue({
           method: 'POST',
           body: JSON.stringify({
             which: s,
-            text: this.text,
             ig: this.ig,
             email: this.emil,
             phone: this.phone
@@ -31,7 +30,13 @@ let wap = new Vue({
         })
     },
     teeShot: function() {
-        this.imgData = renderer.domElement.toDataURL()
+        var imgData = renderer.domElement.toDataURL()
+        var linkDown = document.createElement("a")
+        linkDown.download = s + ".png"
+        linkDown.href = imgData
+        document.body.appendChild(linkDown)
+        linkDown.click()
+        document.body.removeChild(linkDown)
     }
   }
 })
@@ -207,7 +212,7 @@ function render() {
     renderer.render(scene, camera)
     setTimeout(()=>{
         firstRun = false
-    }, 1000)
+    }, 5000)
   }
 }
 

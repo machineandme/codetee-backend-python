@@ -27,12 +27,21 @@
             <div style="padding: 3rem" class="column is-half">
                 <div class="box">
                     <h3 class="title">{{title}}</h3>
-                    <p>{{text}}</p>
+                    <p>
+                        {{color=="dark"?"Dark":"White"}} tee helloworld.{{text}}
+                    </p>
                     <hr>
+                    <div class="columns is-vcentered">
+                        <div class="column">
                     <h5 class="title is-5">1900 RUB.</h5>
-                    <button class="button is-dark" @click="buy=!buy">grab tee</button>
-                    <button class="button is-dark" @click="teeShot">teeshot</button>
-                    <img :src="imgData" alt="teeshot">
+                        </div>
+                        <div class="column is-narrow">
+                    <button class="button is-dark" @click="buy=!buy">
+                        Buy
+                    </button>
+                        </div>
+                    </div>
+<!--                    <button class="button is-dark" @click="teeShot">teeshot</button>-->
                 </div>
             </div>
         </section>
@@ -46,7 +55,7 @@
             </header>
             <section class="modal-card-body">
                 <div class="field">
-                    <label class="label">Instagram</label>
+                    <label class="label">Instagram?</label>
                     <div class="control">
                         <input class="input" type="text" placeholder="@asyncio.coroutine" v-model="ig">
                     </div>
