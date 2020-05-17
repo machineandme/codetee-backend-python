@@ -4,6 +4,7 @@ from functools import lru_cache
 from io import BytesIO
 from collections import Counter
 from datetime import datetime, timezone, timedelta
+import textwrap
 from uuid import uuid4
 from time import time
 import asyncio
@@ -14,9 +15,11 @@ import pprint
 import geoip2.database
 from ua_parser import user_agent_parser
 import json
+import random
 from pathlib import Path
 
 
+DEV = '-dev' in sys.argv
 GEO_IP = geoip2.database.Reader('./GeoLite2-City.mmdb')
 RATER_COOKIE = "nikoRateLimiterID"
 TELEGRAM_TOKEN = "1095344417:AAEc0suB1LIY4nhMTeR_EGXnaArDlX693tE"
@@ -25,6 +28,9 @@ TELEGRAM_BOT_SEND_FILE_URL = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN + '
 
 
 async def telegram_send(bot_message):
+    if DEV:
+        print(bot_message)
+        return
     _p = dict(chat_id=354451358, parse_mode='Markdown', text=bot_message)
     async with ClientSession() as session:
         async with session.get(TELEGRAM_BOT_SEND_MESS_URL, params=_p):
@@ -32,6 +38,11 @@ async def telegram_send(bot_message):
 
 
 async def telegram_send_as_file(bio):
+    if DEV:
+        with open("biosave_" + bio.name, "wb") as f:
+            f.write(bio.read())
+        print(bio.name, "saved.")
+        return
     _p = dict(chat_id="354451358")
     async with ClientSession() as session:
         async with session.get(TELEGRAM_BOT_SEND_FILE_URL, data={'document': bio, **_p}) as p:
@@ -40,7 +51,7 @@ async def telegram_send_as_file(bio):
 
 STATISTICS = {}
 SAVE_FILE_ANALYTICS_PATH = Path("./analy.ze")
-if SAVE_FILE_ANALYTICS_PATH.exists():
+if not DEV and SAVE_FILE_ANALYTICS_PATH.exists():
     with open(SAVE_FILE_ANALYTICS_PATH) as f_:
         backup = json.load(f_)
     STATISTICS_EVENTS = backup
@@ -56,19 +67,23 @@ async def shed(_):
 
 async def notify():
     while True:
-        for _ in range(3):
-            uuids = Counter(STATISTICS_EVENTS['uuid'])
-            uniq = len(uuids.keys())
-            total = len(STATISTICS_EVENTS['uuid'])
-            uptime = int(time() - STATISTICS["time_start"])
-            citys = Counter(STATISTICS_EVENTS['city'])
-            STATISTICS["time_up"] = str.join(":",
-                [str(i).zfill(2) for i in [uptime // (60 * 60), (uptime // 60) % 60, uptime % 60]]
+        for i in range(1):
+            if DEV:
+                await asyncio.sleep(20 + i)
+            else:
+                await asyncio.sleep(15 * (60 + i))
+            users_unique = len(Counter(STATISTICS_EVENTS['uuid']).keys())
+            users_total = len(STATISTICS_EVENTS['uuid'])
+            up_time = int(time() - STATISTICS["time_start"])
+            cities = Counter(STATISTICS_EVENTS['city'])
+            cities.pop("")
+            STATISTICS["time_up"] = str.join(
+                ":",
+                [str(i).zfill(2) for i in [up_time // (60 * 60), (up_time // 60) % 60, up_time % 60]]
             )
             await telegram_send(f'**Uptime**: {STATISTICS["time_up"]}\n'
-                                f'**Users**: {uniq}/{total}\n'
-                                f'{pprint.pformat(dict(citys))}')
-            await asyncio.sleep(10 * 60)
+                                f'**Users**: {users_unique}/{users_total}\n'
+                                f'''{textwrap.dedent(pprint.pformat(dict(cities))[1:-1].replace("'", ""))}''')
         bio = BytesIO(get_rowed_stats().encode())
         bio.name = "stats.html"
         await telegram_send_as_file(bio)
@@ -88,8 +103,7 @@ def get_preview_html(_):
 
 async def register_connection(uuid, request: web.Request, item="index"):
     STATISTICS_EVENTS['uuid'].append(uuid)
-    STATISTICS_EVENTS['time'].append(datetime.now(tz=timezone(timedelta(hours=+3))).isoformat())
-    STATISTICS_EVENTS['ipad'].append(request.remote)
+    STATISTICS_EVENTS['time'].append(datetime.now(tz=timezone(timedelta(hours=+3))).isoformat(' ').split('.')[0])
     STATISTICS_EVENTS['item'].append(item)
     lang = request.headers.get("Accept-Language", "any").lower()
     STATISTICS_EVENTS['lang'].append(lang)
@@ -106,8 +120,10 @@ async def register_connection(uuid, request: web.Request, item="index"):
     except Exception:
         STATISTICS_EVENTS['ua'].append("")
         STATISTICS_EVENTS['os'].append("")
+    ip = request.remote if not DEV else f"{random.randrange(255)}.13.130.40"
+    STATISTICS_EVENTS['ipad'].append(ip)
     try:
-        geo_info = GEO_IP.city(request.remote)
+        geo_info = GEO_IP.city(ip)
         STATISTICS_EVENTS['city'].append(geo_info.city.names['ru'])
         STATISTICS_EVENTS['cont'].append(geo_info.country.iso_code)
     except Exception:
@@ -120,6 +136,9 @@ async def register_connection(uuid, request: web.Request, item="index"):
 def get_rowed_stats():
     rowed = [i for i in zip(*STATISTICS_EVENTS.values())]
     t = tabulate(rowed, STATISTICS_EVENTS.keys(), tablefmt="html")
+    t = ('<meta charset="utf-8">'
+         '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">'
+         + t.replace('<table>', '<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">'))
     return t
 
 
@@ -180,4 +199,7 @@ app.add_routes([
 ])
 app.on_startup.append(shed)
 app.middlewares.append(error_middleware)
-web.run_app(app, host="0.0.0.0", port=80)
+if DEV:
+    web.run_app(app, host="127.0.0.1", port=8080)
+else:
+    web.run_app(app, host="0.0.0.0", port=80)
