@@ -86,7 +86,7 @@ async def notify():
             )
             await telegram_send(f'**Uptime**: {STATISTICS["time_up"]}\n'
                                 f'**Users**: {users_unique}/{users_total}\n'
-                                f'''{textwrap.dedent(pprint.pformat(dict(cities))[1:-1].replace("'", ""))}''')
+                                f'''{pprint.pformat(dict(cities)).replace("'", "")}''')
         bio = BytesIO(get_rowed_stats().encode())
         bio.name = "stats.html"
         await telegram_send_as_file(bio)
@@ -179,6 +179,19 @@ async def shirt(request: web.Request):
     return response
 
 
+async def checkout(request: web.Request):
+    who = request.cookies.get(RATER_COOKIE)
+    print(who)
+    if who is None:
+        who = str(uuid4())
+    body = await request.json()
+    await telegram_send(str(body))
+    asyncio.create_task(register_connection(who, request, "checkout"))
+    response = web.Response(body="ok", status=200)
+    response.cookies[RATER_COOKIE] = who
+    return response
+
+
 async def error_middleware(_, handler):
     async def middleware_handler(request):
         try:
@@ -197,6 +210,7 @@ app = web.Application()
 app.add_routes([
     web.static('/such_static/', "./web/"),
     web.get('/', index),
+    web.post('/checkout', checkout),
     web.get('/preview/{path:.*}', preview),
     web.get('/shirt/{path:.*}', shirt),
 ])

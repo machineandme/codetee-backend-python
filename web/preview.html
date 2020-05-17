@@ -26,11 +26,13 @@
             </div>
             <div style="padding: 3rem" class="column is-half">
                 <div class="box">
-                    <h3 class="title">!TITLE</h3>
-                    <p>!TEXT</p>
+                    <h3 class="title">{{title}}</h3>
+                    <p>{{text}}</p>
                     <hr>
                     <h5 class="title is-5">1900 RUB.</h5>
                     <button class="button is-dark" @click="buy=!buy">grab tee</button>
+                    <button class="button is-dark" @click="teeShot">teeshot</button>
+                    <img :src="imgData" alt="teeshot">
                 </div>
             </div>
         </section>
@@ -46,7 +48,7 @@
                 <div class="field">
                     <label class="label">Instagram</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="@asyncio.coroutine" v-model="email">
+                        <input class="input" type="text" placeholder="@asyncio.coroutine" v-model="ig">
                     </div>
                 </div>
                 <div class="field">
@@ -58,13 +60,28 @@
                 <div class="field">
                     <label class="label">Phone?</label>
                     <div class="control">
-                        <input class="input" type="tel" placeholder="+79128321103" v-model="email">
+                        <input class="input" type="tel" placeholder="+79128321103" v-model="phone">
                     </div>
                     <p class="help">We will try to find you in a telegram or whatsapp.</p>
                 </div>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success" @click="submit">yes please</button>
+                <button class="button is-dark" @click="submit">yes please</button>
+            </footer>
+        </div>
+    </div>
+    <div class="modal" :class="thx?'is-active':''">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">OK!</p>
+                <button class="delete" aria-label="close" @click="thx=false"></button>
+            </header>
+            <section class="modal-card-body">
+                We will contact you as soon as possible! Thank you!
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" @click="thx=false">thank you too</button>
             </footer>
         </div>
     </div>

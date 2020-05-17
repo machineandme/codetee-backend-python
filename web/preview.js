@@ -1,18 +1,37 @@
 var firstRun = true
+var s = location.pathname.split("/")
+s = s.pop() || s.pop()
 
 
 let wap = new Vue({
   el: "#app",
   data: {
     buy: false,
+    thx: false,
+    title: "Teeeee with code!",
+    text: s,
     ig: "",
     email: "",
-    phone: ""
+    phone: "",
+    imgData: ""
   },
   methods: {
     submit: function() {
         this.buy = false
-        alert("Accepted:)")
+        this.thx = true
+        let response = fetch('/checkout', {
+          method: 'POST',
+          body: JSON.stringify({
+            which: s,
+            text: this.text,
+            ig: this.ig,
+            email: this.emil,
+            phone: this.phone
+          })
+        })
+    },
+    teeShot: function() {
+        this.imgData = renderer.domElement.toDataURL()
     }
   }
 })
@@ -61,10 +80,10 @@ function init() {
 
   scene = new THREE.Scene()
 
-  let ambientLight = new THREE.AmbientLight(0xcccccc, 0.4)
+  let ambientLight = new THREE.AmbientLight(0xcccccc, 0.8)
   scene.add(ambientLight)
 
-  let pointLight = new THREE.PointLight(0xffffff, 0.8)
+  let pointLight = new THREE.PointLight(0xffffff, 0.5)
   camera.add(pointLight)
   scene.add(camera)
 
@@ -88,9 +107,6 @@ function init() {
 
   // comment in the following line and import TGALoader if your asset uses TGA textures
   // manager.addHandler( /\.tga$/i, new TGALoader() )
-
-  var s = location.pathname.split("/")
-  s = s.pop() || s.pop()
 
   const base_mtl = '/shirt/' + s + '/'
   const mtl_file = '6_OBJ_T-shirts.mtl'
@@ -128,7 +144,7 @@ function init() {
 
   //
 
-  renderer = new THREE.WebGLRenderer({ alpha: true })
+  renderer = new THREE.WebGLRenderer({ alpha: true, preserveDrawingBuffer: true  })
   // renderer.setClearColor(0x000011, 0.1)
   renderer.setClearColor(0x000000, 0)
   renderer.setPixelRatio(window.devicePixelRatio)
@@ -181,13 +197,17 @@ function animate() {
 function render() {
   // let de = renderer.domElement
   if (firstRun || renderer.domElement.matches(':hover')) {
-    firstRun = false
+    if (!firstRun) {
     camera.position.x = renderer.domElement.offsetLeft - mouseX
     camera.position.z = 200 + renderer.domElement.offsetTop - mouseY
+    }
     let centa = new THREE.Vector3(scene.position.x, scene.position.y, scene.position.z)
     camera.lookAt(centa)
 
     renderer.render(scene, camera)
+    setTimeout(()=>{
+        firstRun = false
+    }, 1000)
   }
 }
 

@@ -8,7 +8,7 @@ from pygments.token import Text
 
 from app.stylez import FirstStyle
 
-FONT_SIZE = 24
+FONT_SIZE = 30
 
 
 # PATCH IN FONT MANAGER
@@ -86,6 +86,7 @@ def show_pic(tokens, s=FirstStyle):
                           image_pad=0,
                           line_pad=6,
                           style=s)
+    form.style.background_color = "#ffffff00"
     file = BytesIO()
     form.format(tokens, file)
     file.seek(0)

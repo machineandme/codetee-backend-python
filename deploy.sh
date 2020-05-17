@@ -1,10 +1,9 @@
-ssh root@64.227.116.164 "cd shirts
+ssh root@64.227.116.164 "bash -c 'cd shirts
 git pull
 killall python
 sleep 1
-pipenv install --skip-lock
-pipenv run python server.py &
-disown
+killall screen
+#pipenv install --skip-lock
+screen -d -m pipenv run python server.py
 sleep 1
-curl --request GET -sL --url 'http://localhost/'
-exit 0"
+wget -qO- 'http://localhost/' | head -1'"
