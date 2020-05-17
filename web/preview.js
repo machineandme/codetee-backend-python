@@ -157,6 +157,7 @@ function init() {
   container.appendChild(renderer.domElement)
 
   document.addEventListener('mousemove', onDocumentMouseMove, false)
+  document.addEventListener('touchmove', onDocumentMouseMove, false)
 
   //
 
