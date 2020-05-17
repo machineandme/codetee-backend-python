@@ -24,7 +24,7 @@ let wap = new Vue({
           body: JSON.stringify({
             which: s,
             ig: this.ig,
-            email: this.emil,
+            email: this.email,
             phone: this.phone
           })
         })

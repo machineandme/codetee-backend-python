@@ -31,7 +31,7 @@ async def telegram_send(bot_message):
     if DEV:
         print(bot_message)
         return
-    _p = dict(chat_id=354451358, parse_mode='Markdown', text=bot_message)
+    _p = dict(chat_id=354451358, text=bot_message)
     async with ClientSession() as session:
         async with session.get(TELEGRAM_BOT_SEND_MESS_URL, params=_p):
             return
@@ -181,7 +181,6 @@ async def shirt(request: web.Request):
 
 async def checkout(request: web.Request):
     who = request.cookies.get(RATER_COOKIE)
-    print(who)
     if who is None:
         who = str(uuid4())
     body = await request.json()
