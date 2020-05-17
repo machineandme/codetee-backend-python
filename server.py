@@ -76,7 +76,10 @@ async def notify():
             users_total = len(STATISTICS_EVENTS['uuid'])
             up_time = int(time() - STATISTICS["time_start"])
             cities = Counter(STATISTICS_EVENTS['city'])
-            cities.pop("")
+            try:
+                cities.pop("")
+            except Exception:
+                pass
             STATISTICS["time_up"] = str.join(
                 ":",
                 [str(i).zfill(2) for i in [up_time // (60 * 60), (up_time // 60) % 60, up_time % 60]]
