@@ -185,7 +185,7 @@ function onWindowResize() {
 function onDocumentMouseMove(event) {
 
   mouseX = (event.clientX - windowHalfX) / 2
-  mouseY = (event.clientY - windowHalfY) / 2
+  mouseY = (event.clientY - windowHalfY) / .5
 
 }
 
@@ -210,6 +210,7 @@ function render() {
     camera.lookAt(centa)
 
     renderer.render(scene, camera)
+    firstRun = false
     setTimeout(()=>{
         firstRun = false
     }, 5000)
