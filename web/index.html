@@ -1,53 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine and me</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" integrity="sha256-qS+snwBgqr+iFVpBB58C9UCxKFhyL03YHpZfdNUhSEw=" crossorigin="anonymous">
-    <link rel="stylesheet" href="/such_static/style.css">
+    <link rel="shortcut icon" href="web/fav.png">
+    <link rel="stylesheet" href="web/style_normalize.css">
+    <link rel="stylesheet" href="web/style.css">
 </head>
-
 <body>
-<main id="app">
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-                Teeeees |<span style="margin-left: 5px" class="is-size-7">Machine &amp; me</span>
-            </a>
-        </div>
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" title="Hello world Tees Collection"
-                   href="#HelloWorld">
-                    Hello World
-                </a>
-                <a class="navbar-item" title="Hot keys Tees Collection"
-                   href="#CheatSheets">
-                    Cheat sheets
-                </a>
-                <a class="navbar-item" title="Paired Tees, U+Me, Collection"
-                   href="#UandMe">
-                    U+Me
-                </a>
-            </div>
-        </div>
-    </nav>
-    <div style="padding: 1rem; min-height: 100vh" class="has-background-light">
-        <section class="columns is-multiline" id="HelloWorld">
-            <div class="column is-6" v-for="tee in ['asm_dark', 'asm_light', 'bash_dark', 'bash_light', 'm_dark', 'm_light', 'py_dark', 'py_light', 'kt_dark', 'kt_light', 'cpp_dark', 'cpp_light', 'swift_dark', 'swift_light', 'awk_dark', 'awk_light', 'rb_dark', 'rb_light', 'js_dark', 'js_light', 'go_dark', 'go_light', 'rs_dark', 'rs_light', 'php_dark', 'php_light', 'vb_dark', 'vb_light', 'java_dark', 'java_light']">
-                <a :href="'preview/'+tee" class="box">
-                    <img :src="'/such_static/teeshots/' + tee + '.png'" alt="">
-                    <br>
-                    <h3 class="title is-3">{{tee.split("_")[1]}} helloworld.{{tee.split("_")[0]}}</h3>
-                </a>
-            </div>
-        </section>
-    </div>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js" integrity="sha256-ngFW3UnAN0Tnm76mDuu7uUtYEcG3G5H1+zioJw3t+68=" crossorigin="anonymous"></script>
-<script type="module" src="/such_static/index.js"></script>
+    <!-- I dont sorry -->
+    <img src="web/Site.svg" alt="">
 </body>
-
 </html>

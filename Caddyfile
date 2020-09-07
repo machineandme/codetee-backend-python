@@ -1,0 +1,8 @@
+machineand.me:80 {
+    redir https://machineand.me
+}
+
+machineand.me:443 {
+    tls billionspoint@gmail.com
+    reverse_proxy localhost:9005
+}

@@ -1,18 +1,3 @@
-.homepage--dots {
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' …16'/%3E%3Crect x='0' y='0' fill='white' width='1' height='1'/%3E%3C/svg%3E");
-    background-size: 16px;
-    opacity: .35;
-}
-
-@keyframes animTeeWith {
-    0% { opacity: 0 }
-    20% { opacity: 1 }
-}
-
-#tee-with {
-    animation: animTeeWith ease infinite 2s;
+body > img {
+    width: 100vw;
 }

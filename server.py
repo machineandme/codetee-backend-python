@@ -71,18 +71,12 @@ async def notify():
             users_unique = len(Counter(STATISTICS_EVENTS['uuid']).keys())
             users_total = len(STATISTICS_EVENTS['uuid'])
             up_time = int(time() - STATISTICS["time_start"])
-            cities = Counter(STATISTICS_EVENTS['city'])
-            try:
-                cities.pop("")
-            except Exception:
-                pass
             STATISTICS["time_up"] = str.join(
                 ":",
                 [str(i).zfill(2) for i in [up_time // (60 * 60), (up_time // 60) % 60, up_time % 60]]
             )
-            await telegram_send(f'**Uptime**: {STATISTICS["time_up"]}\n'
-                                f'**Users**: {users_unique}/{users_total}\n'
-                                f'''{pprint.pformat(dict(cities)).replace("'", "")}''')
+            await telegram_send(f'Uptime: {STATISTICS["time_up"]}\n'
+                                f'Users: {users_unique}/{users_total}\n')
             if DEV:
                 await asyncio.sleep(20 + i)
             else:
@@ -95,12 +89,6 @@ async def notify():
 @lru_cache(1)
 def get_index_html(_):
     with open("web/index.html", "rb") as f:
-        return f.read()
-
-
-@lru_cache(1)
-def get_preview_html(_):
-    with open("web/preview.html", "rb") as f:
         return f.read()
 
 
@@ -156,41 +144,6 @@ async def index(request: web.Request):
     return response
 
 
-async def preview(request: web.Request):
-    await request.release()
-    item = request.match_info['path'].strip("/")
-    who = request.cookies.get(RATER_COOKIE)
-    if who is None:
-        who = str(uuid4())
-    await register_connection(who, request, item)
-    response = web.Response(body=get_preview_html(time()), content_type="text/html", charset="utf-8")  # TODO time remove
-    response.cookies[RATER_COOKIE] = who
-    return response
-
-
-async def shirt(request: web.Request):
-    item = request.match_info['path'].strip("/")
-    lib, file_name = item.split("/")
-    if file_name == "tee.jpg":
-        file_name = lib + "/" + file_name
-    with open("web/shirt/" + file_name, 'rb') as file:
-        data = file.read()
-        response = web.Response(body=data)
-    return response
-
-
-async def checkout(request: web.Request):
-    who = request.cookies.get(RATER_COOKIE)
-    if who is None:
-        who = str(uuid4())
-    body = await request.json()
-    await telegram_send(str(body))
-    asyncio.create_task(register_connection(who, request, "checkout"))
-    response = web.Response(body="ok", status=200)
-    response.cookies[RATER_COOKIE] = who
-    return response
-
-
 async def error_middleware(_, handler):
     async def middleware_handler(request):
         try:
@@ -207,15 +160,12 @@ async def error_middleware(_, handler):
 
 app = web.Application()
 app.add_routes([
-    web.static('/such_static/', "./web/"),
+    web.static('/web/', "./web/"),
     web.get('/', index),
-    web.post('/checkout', checkout),
-    web.get('/preview/{path:.*}', preview),
-    web.get('/shirt/{path:.*}', shirt),
 ])
 app.on_startup.append(shed)
 app.middlewares.append(error_middleware)
 if DEV:
     web.run_app(app, host="127.0.0.1", port=8080)
 else:
-    web.run_app(app, host="0.0.0.0", port=80)
+    web.run_app(app, host="0.0.0.0", port=9005)
