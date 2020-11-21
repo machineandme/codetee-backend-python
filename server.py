@@ -80,16 +80,10 @@ async def notify():
                 ":",
                 [str(i).zfill(2) for i in [up_time // (60 * 60), (up_time // 60) % 60, up_time % 60]]
             )
-            await telegram_send(f'**Uptime**: {STATISTICS["time_up"]}\n'
-                                f'**Users**: {users_unique}/{users_total}\n'
-                                f'''{pprint.pformat(dict(cities)).replace("'", "")}''')
-            if DEV:
-                await asyncio.sleep(20 + i)
-            else:
-                await asyncio.sleep(15 * (60 + i))
-        bio = BytesIO(get_rowed_stats().encode())
-        bio.name = "stats.html"
-        await telegram_send_as_file(bio)
+            print(f'**Uptime**: {STATISTICS["time_up"]}\n'
+                  f'**Users**: {users_unique}/{users_total}\n'
+                  f'''{pprint.pformat(dict(cities)).replace("'", "")}''')
+            await asyncio.sleep(15 * (60 + i))
 
 
 @lru_cache(1)
@@ -184,7 +178,8 @@ async def checkout(request: web.Request):
     if who is None:
         who = str(uuid4())
     body = await request.json()
-    await telegram_send(str(body))
+    print(body)
+    # await telegram_send(str(body))
     asyncio.create_task(register_connection(who, request, "checkout"))
     response = web.Response(body="ok", status=200)
     response.cookies[RATER_COOKIE] = who

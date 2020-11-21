@@ -1,0 +1,54 @@
+---
+- name: Deploy codetee
+  hosts: codetee
+  roles:
+    - { role: datadog.datadog, become: yes }
+  vars:
+    datadog_api_key: "5faebf15670514349970e9d499bf3ca8"
+    datadog_site: "datadoghq.com"
+    datadog_config:
+      tags:
+        - "region:Frankfurt1"
+        - "availability-zone:digital-ocean"
+        - "instance-type:codetee"
+      logs_enabled: true
+      process_config:
+        enabled: "true"
+    datadog_checks:
+      systemd:
+        init_config:
+        instances:
+          - unit_names:
+              - codetee
+      journald:
+        logs:
+          - type: journald
+            include_units:
+              - codetee.service
+  tasks:
+    - name: Uploading codetee backend
+      synchronize:
+        src: "."
+        dest: /opt/codetee/
+    - name: Requirements install
+      pip:
+        requirements: /opt/codetee/requirements.txt
+    - name: Creating Codetee service in systemd
+      copy:
+        dest: /etc/systemd/system/backendcodetee.service
+        content: |
+          [Unit]
+          Description=Codetee backend
+          [Service]
+          Type=simple
+          ExecStart=/usr/bin/python3.8 /opt/codetee/server.py -dev
+          WorkingDirectory=/opt/codetee/
+          Restart=always
+          [Install]
+          WantedBy=multi-user.target
+    - name: Enable and restart Codetee service
+      systemd:
+        daemon_reload: yes
+        enabled: yes
+        state: restarted
+        name: backendcodetee
