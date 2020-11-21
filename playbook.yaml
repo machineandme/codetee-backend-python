@@ -26,8 +26,14 @@
             include_units:
               - codetee.service
   tasks:
-    - name: Installing pip
-      shell: curl https://bootstrap.pypa.io/get-pip.py | python3
+    - name: Install python shits
+      yum:
+        name:
+          - gcc
+          - zlib-devel
+          - libjpeg-devel
+          - python3-devel
+        state: present
     - name: Uploading codetee backend
       synchronize:
         src: ./
