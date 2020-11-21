@@ -26,6 +26,18 @@
             include_units:
               - codetee.service
   tasks:
+    - name: Anable centos epel
+      yum:
+        name: epel-release
+        state: present
+    - name: Install pip3
+      yum:
+        name:
+          - curl
+          - python36
+        state: present
+    - name: Installing pip
+      shell: curl https://bootstrap.pypa.io/get-pip.py | python3
     - name: Uploading codetee backend
       synchronize:
         src: "."
@@ -41,7 +53,7 @@
           Description=Codetee backend
           [Service]
           Type=simple
-          ExecStart=/usr/bin/python3.8 /opt/codetee/server.py -dev
+          ExecStart=/usr/bin/python36 /opt/codetee/server.py -dev
           WorkingDirectory=/opt/codetee/
           Restart=always
           [Install]
