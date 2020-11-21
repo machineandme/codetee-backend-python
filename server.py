@@ -12,7 +12,6 @@ import traceback
 from tabulate import tabulate
 import sys
 import pprint
-import geoip2.database
 from ua_parser import user_agent_parser
 import json
 import random
@@ -20,7 +19,6 @@ from pathlib import Path
 
 
 DEV = '-dev' in sys.argv
-GEO_IP = geoip2.database.Reader('./GeoLite2-City.mmdb')
 RATER_COOKIE = "nikoRateLimiterID"
 TELEGRAM_TOKEN = "1095344417:AAEc0suB1LIY4nhMTeR_EGXnaArDlX693tE"
 TELEGRAM_BOT_SEND_MESS_URL = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN + '/sendMessage'
@@ -120,7 +118,7 @@ async def register_connection(uuid, request: web.Request, item="index"):
     ip = request.remote if not DEV else f"{random.randrange(255)}.13.130.40"
     STATISTICS_EVENTS['ipad'].append(ip)
     try:
-        geo_info = GEO_IP.city(ip)
+        geo_info = 'Fakeland'
         STATISTICS_EVENTS['city'].append(geo_info.city.names['ru'])
         STATISTICS_EVENTS['cont'].append(geo_info.country.iso_code)
     except Exception:
