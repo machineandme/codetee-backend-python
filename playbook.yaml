@@ -40,7 +40,7 @@
       shell: curl https://bootstrap.pypa.io/get-pip.py | python3
     - name: Uploading codetee backend
       synchronize:
-        src: "."
+        src: ./
         dest: /opt/codetee/
     - name: Requirements install
       pip:
@@ -53,7 +53,7 @@
           Description=Codetee backend
           [Service]
           Type=simple
-          ExecStart=/usr/bin/python36 /opt/codetee/server.py -dev
+          ExecStart=/usr/bin/python3 /opt/codetee/server.py -dev
           WorkingDirectory=/opt/codetee/
           Restart=always
           [Install]
